@@ -6,4 +6,5 @@
 4. vimrc file
 
 
-* Add external monitor as display: xrandr --output HDMI1 --auto
+* Add external monitor as display, when using laptop
+* xrandr --output HDMI1 --auto
