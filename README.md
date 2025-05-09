@@ -7,4 +7,4 @@
 
 
 * Add external monitor as display, when using laptop
-* xrandr --output HDMI1 --auto
+`xrandr --output HDMI1 --auto`
