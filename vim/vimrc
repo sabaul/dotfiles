@@ -1,3 +1,5 @@
+let mapleader = " "
+
 " plugins
 let need_to_install_plugins = 0
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -200,3 +202,7 @@ function! XTermPasteBegin()
 endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+
+" My custom addition to run current python file
+nnoremap <leader>r :w<CR>:!python3 %<CR>
