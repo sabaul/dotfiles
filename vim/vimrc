@@ -205,4 +205,4 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 
 " My custom addition to run current python file
-nnoremap <leader>r :w<CR>:!python3 %<CR>
+nnoremap <leader>r :w<CR>:!clear && python3 %<CR>
