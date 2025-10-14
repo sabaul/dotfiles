@@ -51,12 +51,6 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+B exec brave-browser
 bindsym $mod+Shift+B exec firefox
 
-# start codium
-bindsym $mod+Shift+V exec codium
-
-# start sublime text
-bindsym $mod+Shift+S exec subl 
-
 # start nautilus
 bindsym $mod+Shift+F exec nautilus
 
@@ -201,7 +195,10 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 # Screenshot
 bindsym Print exec "flameshot gui"
 bindsym $mod+Print exec "flameshot screen"
-bindsym $mod+Shift+Print exec "flameshot gui --clipboard --path ~/Pictures"
+bindsym $mod+Shift+S exec "flameshot gui --clipboard --path ~/Pictures"
 
 # Screen Lock using i3lock
 bindsym $mod+l exec "i3lock --color 000000"
+
+# Run VSCodium shortcut
+bindsym $mod+Shift+V exec flatpak run com.vscodium.codium
