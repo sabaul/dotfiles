@@ -3,7 +3,7 @@
 1. i3 and i3status
 2. Kitty
 3. vimrc with some plugins, keeping it minimal
-4. Post Installation Setup bash script
+4. Post Installation Setup bash script (**Not Yet Tested**)
    * Brave Browser
    * VSCodium from flatpak, setup alias as codium in bashrc
    * Installing packages required for i3
