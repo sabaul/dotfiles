@@ -97,7 +97,11 @@ endfunction
 
 " color scheme
 syntax on
-colorscheme onedark
+
+" Set colorscheme once
+let g:my_colorscheme = 'onedark'
+execute 'colorscheme ' . g:my_colorscheme
+
 filetype on
 filetype plugin indent on
 
@@ -148,8 +152,8 @@ nmap <leader><Left> :wincmd h<CR>
 nmap <leader><Right> :wincmd l<CR>
 
 " move through buffers
-nmap <leader>[ :bp!<CR>
-nmap <leader>] :bn!<CR>
+nmap <Tab> :bn!<CR>
+nmap <S-Tab> :bp!<CR>
 nmap <leader>x :bp<bar>bd#<CR>
 
 " restore place in file from previous session
@@ -186,7 +190,7 @@ map <leader>t :TagbarToggle<CR>
 
 " copy, cut and paste
 vmap <C-c> "+y
-vmap <C-x> "+c
+vmap <C-x> "+d
 vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
 
@@ -206,3 +210,15 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 " My custom addition to run current python file
 nnoremap <leader>r :w<CR>:!clear && python3 %<CR>
+
+
+" Lightline config using the same variable
+let g:lightline = {
+      \ 'colorscheme': g:my_colorscheme,
+      \ 'active': {
+      \   'left': [ ['mode', 'paste'], ['relativepath'] ]
+      \ },
+      \ 'component_function': {
+      \   'relativepath': 'RelativePath'
+      \ }
+      \ }
