@@ -13,26 +13,26 @@ echo "Installing Brave browser..."
 curl -fsS https://dl.brave.com/install.sh | sh
 
 # Step 2: Ensure Flatpak and Flathub are available
-echo "Checking for Flatpak..."
+# echo "Checking for Flatpak..."
 
-if ! command -v flatpak &> /dev/null; then
-    echo "Flatpak not found. Installing Flatpak..."
-    apt install -y flatpak
-else
-    echo "Flatpak is already installed."
-fi
+# if ! command -v flatpak &> /dev/null; then
+#     echo "Flatpak not found. Installing Flatpak..."
+#     apt install -y flatpak
+# else
+#     echo "Flatpak is already installed."
+# fi
 
 # Add Flathub repository if not already present
-echo "Ensuring Flathub repository is added..."
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+# echo "Ensuring Flathub repository is added..."
+# flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # Step 3: Install VSCodium via Flatpak
-echo "Installing VSCodium..."
-flatpak install -y flathub com.vscodium.codium
+# echo "Installing VSCodium..."
+# flatpak install -y flathub com.vscodium.codium
 
 # Create alias in .bashrc
-echo "Creating alias for VSCodium..."
-echo "alias codium='flatpak run com.vscodium.codium'" >> ~/.bashrc
+# echo "Creating alias for VSCodium..."
+# echo "alias codium='flatpak run com.vscodium.codium'" >> ~/.bashrc
 
 
 # Step 4: Install required packages
