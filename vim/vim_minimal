@@ -1,0 +1,120 @@
+" ========== Minimal Python + File Tree + Tabs vimrc ==========
+
+" Leader
+let mapleader = " "
+
+" --- Plugin manager bootstrap (vim-plug) ---
+let need_to_install_plugins = 0
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  let need_to_install_plugins = 1
+endif
+
+" --- Plugins ---
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible'
+
+" Theme (optional)
+Plug 'joshdick/onedark.vim'
+
+" File tree + tabs integration
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'       " optional; git badges in tree
+Plug 'jistr/vim-nerdtree-tabs'           " keep NERDTree behavior across tabs
+
+" Buffer "tabs" line
+Plug 'ap/vim-buftabline'                 " lightweight buffer tabline
+
+" Python dev
+Plug 'dense-analysis/ale'                " ruff, isort, black, mypy
+Plug 'vim-python/python-syntax'          " better Python highlighting
+Plug 'jmcantrell/vim-virtualenv'         " fast venv switching
+" Plug 'jiangmiao/auto-pairs'            " optional pairing
+call plug#end()
+
+" Auto-install on first run
+if need_to_install_plugins == 1
+  echo "Installing plugins..."
+  silent! PlugInstall
+  echo "Done!"
+  q
+endif
+
+" --- Basics ---
+filetype plugin indent on
+syntax on
+set number
+set termguicolors
+set encoding=utf-8
+set fileencoding=utf-8
+set fileformat=unix
+
+" Indentation (PEP8/Black friendly; set to 80 if you prefer)
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set colorcolumn=88
+
+" Folding
+set foldmethod=indent
+set foldlevel=99
+
+" Keep sign column (nice with ALE)
+set signcolumn=yes
+
+" Restore last cursor position
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Theme (optional)
+let g:my_colorscheme = 'onedark'
+silent! colorscheme onedark
+
+" --- NERDTree ---
+let NERDTreeMinimalUI = 1
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+" Toggle the tree
+nnoremap <leader>n :NERDTreeTabsToggle<CR>
+" Open NERDTree at startup only when no file args
+function! StartUp()
+  if argc() == 0
+    NERDTree
+  endif
+endfunction
+autocmd VimEnter * call StartUp()
+
+" --- NERDTree-Tabs defaults (sane, minimal) ---
+let g:nerdtree_tabs_open_on_gui_startup = 0
+let g:nerdtree_tabs_open_on_console_startup = 0
+let g:nerdtree_tabs_no_startup_for_diff = 1
+let g:nerdtree_tabs_smart_startup_focus  = 1
+
+" --- Buffer tabline (buftabline) ---
+" show buffer numbers and modified flag in the tabline (tweak to taste)
+let g:buftabline_numbers = 2         " 0: none, 1: ordinal, 2: buffer #
+let g:buftabline_indicators = 1      " show [+] modified markers
+" navigate buffers like tabs (your old shortcuts)
+nnoremap <Tab> :bn!<CR>
+nnoremap <S-Tab> :bp!<CR>
+nnoremap <leader>x :bp<bar>bd#<CR>
+
+" --- ALE (linting & formatting) ---
+" Install in your environment or via uv:
+"   pip install ruff black isort mypy
+"   # or: uv tool install ruff black isort mypy
+let g:ale_fix_on_save = 1
+let g:ale_linters = { 'python': ['ruff', 'mypy'] }
+let g:ale_fixers  = { 'python': ['ruff', 'isort', 'black'] }
+let g:ale_python_ruff_options = ''
+let g:ale_completion_enabled = 0
+" Quick jump between diagnostics
+nmap <silent> <C-e> <Plug>(ale_next_wrap)
+nmap <silent> <C-r> <Plug>(ale_previous_wrap)
+
+" --- Python syntax plugin tweaks ---
+let g:python_highlight_all = 1
+
+" --- Handy: run current Python file ---
+nnoremap <leader>r :w<CR>:!clear && python3 %<CR>
+
