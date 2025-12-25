@@ -1,0 +1,101 @@
+" ===============================
+" Minimal vimrc: NERDTree only
+" ===============================
+let mapleader = " "
+
+" --- Plugin manager bootstrap (vim-plug) ---
+let need_to_install_plugins = 0
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  let need_to_install_plugins = 1
+endif
+
+" --- Plugins ---
+call plug#begin('~/.vim/plugged')
+
+" Theme
+Plug 'joshdick/onedark.vim'
+
+" File tree integration
+Plug 'preservim/nerdtree'
+
+call plug#end()
+
+" Auto-install on first run
+if need_to_install_plugins == 1
+  echo "Installing plugins..."
+  silent! PlugInstall
+  echo "Done!"
+  q
+endif
+
+
+" --- Tab / indentation (only non-default change) ---
+" --- Basics ---
+filetype plugin indent on
+syntax on
+set number
+set termguicolors
+set encoding=utf-8
+set fileencoding=utf-8
+set fileformat=unix
+
+" Indentation (PEP8 friendly)
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set colorcolumn=88
+
+" Folding
+set foldmethod=indent
+set foldlevel=99
+
+" Always show signcolumn (no flicker)
+set signcolumn=yes
+
+" --- Theme ---
+silent! colorscheme onedark
+
+
+" --- NERDTree basics ---
+let NERDTreeMinimalUI = 1
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+
+" Toggle file tree
+nnoremap <leader>n :NERDTreeTabsToggle<CR>
+
+" Open NERDTree at startup only if no file was given
+function! StartUp()
+  if argc() == 0
+    NERDTree
+  endif
+endfunction
+autocmd VimEnter * call StartUp()
+
+" NERDTree-Tabs defaults
+let g:nerdtree_tabs_open_on_gui_startup = 0
+let g:nerdtree_tabs_open_on_console_startup = 0
+let g:nerdtree_tabs_no_startup_for_diff = 1
+let g:nerdtree_tabs_smart_startup_focus = 1
+
+
+" --- NERDTree ---
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+" --- Handy: run current Python file ---
+nnoremap <leader>r :w<CR>:!clear && python3 %<CR>
+
+" --- Minimal buffer navigation ---
+nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
+
+" Close buffer but keep window
+nnoremap <leader>x :bd<CR>
+
+" List buffers
+nnoremap <leader>bl :ls<CR>
+
+" Quick switch: <leader><leader> toggles previous buffer
+nnoremap <leader><leader> <C-^>
